@@ -13,7 +13,7 @@ This is a python module that uses information of large database of a web server 
 * Most popular article authors of all time.
 * Days on which more than 1% of requests lead to errors.
 
-### Functions in log.py:
+### Functions in report.py:
 * **connect():** Connects to the PostgreSQL database and returns a database connection.
 * **popular_articles():** Prints most popular three articles of all time.
 * **popular_authors():** Prints most popular article authors of all time.
@@ -22,7 +22,7 @@ This is a python module that uses information of large database of a web server 
 ## Instructions
 * <h4>Install <a href="https://www.vagrantup.com/">Vagrant</a> and <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox.</a></h4>
 * <h4>Clone the repository to your local machine:</h4>
-  <pre>git clone https://github.com/visheshbanga/Log-Analysis-Udacity-Project</pre>
+  <pre>git clone https://github.com/suhassrivats/Log-Analysis-Project.git</pre>
 * <h4>Start the virtual machine</h4>
   From your terminal, inside the project directory, run the command `vagrant up`. This will cause Vagrant to download the Linux           operating   system and install it.
   When vagrant up is finished running, you will get your shell prompt back. At this point, you can run `vagrant ssh` to log in to your     newly installed Linux VM!
@@ -34,4 +34,4 @@ This is a python module that uses information of large database of a web server 
 * <h4>Make Views</h4>
   Make views by running respective queries on command line or uncomment code written in python module.
 * <h4>Run Module</h4>
-  <pre>python log.py</pre>
+  <pre>python report.py</pre>
