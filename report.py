@@ -23,15 +23,17 @@ def popular_articles():
     query = ("select title, count(title) as views from articles,log"
              " where log.path = concat('/article/',articles.slug)"
              " group by title order by views desc limit 3;")
-
     try:
         cursor.execute(query)
+        result = cursor.fetchall()
+        db.close()
     except Exception as e:
         raise e
 
-    result = cursor.fetchall()
-    db.close()
-    print result
+    # Print most popular articles
+    print "\nPopular Articles:"
+    for i in range(0, len(result), 1):
+        print "\"" + result[i][0] + "\" - " + str(result[i][1]) + " views"
 
 
 def popular_authors():
@@ -46,15 +48,17 @@ def popular_authors():
              "articles as ar, log where ar.author=au.id and "
              "log.path=concat('/article/',ar.slug) group by au.name order by "
              "views desc;")
-
     try:
         cursor.execute(query)
+        result = cursor.fetchall()
+        db.close()
     except Exception as e:
         raise e
 
-    result = cursor.fetchall()
-    db.close()
-    print result
+    # Print most popular authors
+    print "\nPopular Authors:"
+    for i in range(0, len(result), 1):
+        print "\"" + result[i][0] + "\" - " + str(result[i][1]) + " views"
 
 
 def http_request_errors():
@@ -63,19 +67,25 @@ def http_request_errors():
     A:
     """
     db, cursor = connect()
-    query = ("SELECT au.name, count(log.status) as count FROM authors as au, "
-             "articles as ar, log WHERE ar.author = au.id and "
-             "log.status = '200 OK' and log.path like '%' || ar.slug || '%' "
-             "GROUP BY au.name ORDER BY count desc;")
-
+    query = (
+        "select day, perc from ("
+        "select day, round((sum(requests)/(select count(*) from log where "
+        "substring(cast(log.time as text), 0, 11) = day) * 100), 2) as "
+        "perc from (select substring(cast(log.time as text), 0, 11) as day, "
+        "count(*) as requests from log where status like '%404%' group by day)"
+        "as log_percentage group by day order by perc desc) as final_query "
+        "where perc >= 1")
     try:
         cursor.execute(query)
+        result = cursor.fetchall()
+        db.close()
     except Exception as e:
         raise e
 
-    result = cursor.fetchall()
-    db.close()
-    print result
+    # Print requests that lead to more than 1% error
+    print '\nDays with more than 1% of errors:'
+    for i in range(0, len(result), 1):
+        print str(result[i][0]) + " - "+str(round(result[i][1], 2))+'% errors'
 
 
 def main():
