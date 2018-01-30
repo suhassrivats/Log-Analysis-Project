@@ -35,3 +35,6 @@ This is a python module that uses information of large database of a web server 
   Make views by running respective queries on command line or uncomment code written in python module.
 * <h4>Run Module</h4>
   <pre>python report.py</pre>
+  
+### README Documentation Credits
+@visheshbanga
