@@ -64,9 +64,10 @@ def popular_authors():
 def http_request_errors():
     """
     Q: On which days did more than 1% of requests lead to errors?
-    A:
     """
     db, cursor = connect()
+    #Thanks to @ddavignon for sharing this query. I had to refer to this as
+    # I was finding it hard to write it on my own
     query = (
         "select day, perc from ("
         "select day, round((sum(requests)/(select count(*) from log where "
